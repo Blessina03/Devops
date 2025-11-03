@@ -1,0 +1,432 @@
+Q4	Compile project in Jenkins using Maven DevOps->
+    Dashboard
+    (Repo should have a project first)
+    New Item → Name → Freestyle Project → OK
+    Source Code Management → Git → Repo URL
+    Branch to build → /main
+    Build Steps → Execute Windows batch command →
+    javac Maven.java
+    java Maven (filename)
+    Save
+    Build Now → Click on #1 in Build box
+
+Q5    Create slave node in Jenkins
+      Manage Jenkins → Node → New Node → Name → Permanent Agent → Create
+      Fill the details (keep all same) → Add Root Directory
+      Rest as it is → Save
+
+Click on the node created → You will get a CMD
+→ Copy the path in CMD (where Jenkins is saved)
+→ It will be connected
+
+Q8  	Build pipeline project in JenkinsPipeline
+      Go to Settings → Plugins → search for “Pipeline” → select all & install
+      Jenkins dashboard → New Item → Pipeline → OK
+      Left side → click on Pipeline
+      In Definition, select Pipeline script
+      In the Script box, write or paste the following code:
+      pipeline {
+          agent any
+          stages {
+              stage('Build') {
+                  steps {
+                      echo 'Hello is building!'
+                  }
+              }
+          }
+      }
+      Similarly, change the message to “Hello is testing” or “Hello is running” as needed.
+      Save → Build Now
+Q1) Create AWS instance & connect it to PuTTY
+→ AWS
+
+EC2 → Launch Instance → Name it
+
+Create new key pair → Name it
+
+Key pair type: RSA
+
+Private key file format: .ppk
+(Download the .ppk key)
+
+Network settings → allow SSH, HTTP, HTTPS
+
+Then click Launch Instance
+
+→ PuTTY
+
+Open PuTTY
+
+For Host Name: click on the instance created on AWS, copy the IP address, and paste it here.
+
+Connection type: SSH
+
+On the left-hand side, under Connection → SSH, click on Auth
+
+Click on Browse → select the downloaded .ppk key
+
+Then click Open
+
+A terminal will open → login as:
+
+ec2-user
+
+
+It will show something like:
+
+ec2-user@ip
+
+
+Q2)  Install Docker on AWS instance and show the version of it.
+
+Same as previous, just run the below commands:
+
+sudo yum update -y
+sudo yum install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+docker --version
+
+Q14. Execute basic command in git
+1️⃣ Check Git Version
+git --version
+
+
+✅ Shows if Git is installed and its version.
+2️⃣ Configure Git (first time only)
+git config --global user.name "Your Name"
+git config --global user.email "youremail@example.com"
+
+
+✅ Sets your name and email for commits.
+
+3️⃣ Initialize a Repository
+git init
+
+
+✅ Creates a new Git repository in your current folder.
+
+4️⃣ Check Repository Status
+git status
+
+
+✅ Shows which files are modified, staged, or untracked.
+
+5️⃣ Add Files to Staging Area
+git add filename.txt
+
+
+or add all files:
+
+git add .
+
+
+✅ Prepares files for commit.
+
+6️⃣ Commit Changes
+git commit -m "Added new feature"
+
+
+✅ Saves the staged changes to local repository.
+
+7️⃣ View Commit History
+git log
+
+
+✅ Displays a list of commits with author, date, and message.
+
+8️⃣ Connect to a Remote Repository (e.g., GitHub)
+git remote add origin https://github.com/username/repo.git
+
+
+✅ Links your local repo to a remote one.
+
+9️⃣ Push Changes to Remote Repository
+git push -u origin main
+
+
+✅ Uploads commits to GitHub (branch = main).
+
+🔟 Pull Latest Changes from Remote
+git pull origin main
+
+
+✅ Downloads and merges changes from GitHub.
+
+1️⃣1️⃣ Clone an Existing Repository
+git clone https://github.com/username/repo.git
+
+
+✅ Makes a local copy of a remote repository.
+
+1️⃣2️⃣ Create and Switch Branches
+git branch new-feature
+git checkout new-feature
+
+
+✅ Creates and moves to a new branch.
+
+1️⃣3️⃣ Merge Branch
+git checkout main
+git merge new-feature
+
+
+✅ Combines changes from another branch into main.
+
+1️⃣4️⃣ Remove a File
+git rm filename.txt
+git commit -m "Removed filename.txt"
+
+1️⃣5️⃣ View Remote Repositories
+git remote -v
+
+
+✅ Lists the linked remote repositories.
+
+✅ Quick Summary
+Action	Command
+Initialize repo	git init
+Add files	git add .
+Commit changes	git commit -m "message"
+Link remote	git remote add origin <url>
+Push to GitHub	git push -u origin main
+Pull updates	git pull origin main
+Check status	git status
+View commits	git log
+
+
+Q15.	Create a Git repository, add a new file to the repository, Commit the changes with a meaningful message, Push the changes to a remote repository.
+🪜 Step-by-Step Commands
+1️⃣ Create a new folder and initialize Git
+mkdir myproject
+cd myproject
+git init
+
+✅ This creates a new local Git repository.
+
+2️⃣ Create a new file
+echo "This is my first Git file" > readme.txt
+
+Or you can create it manually using Notepad or VS Code.
+
+3️⃣ Check the repository status
+git status
+
+✅ Shows which files are untracked (not yet added to Git).
+
+4️⃣ Add the file to the staging area
+git add readme.txt
+
+✅ This stages the file to be committed.
+
+5️⃣ Commit the file with a meaningful message
+git commit -m "Added readme.txt as initial project file"
+
+✅ This saves the change in the local Git history.
+
+6️⃣ Connect to a remote GitHub repository
+👉 Go to GitHub.com, click New Repository, and copy the HTTPS URL.
+For example:
+https://github.com/username/myproject.git
+
+Then connect it to your local repo:
+git remote add origin https://github.com/username/myproject.git
+
+
+7️⃣ Push your changes to GitHub
+git push -u origin main
+
+(If your branch is called master, replace main with master.)
+✅ This uploads your local commits to the remote repository.
+
+8️⃣ Verify
+Go to your GitHub repository page — you’ll see your file and commit message there 🎉
+
+🔍 Summary of Commands
+mkdir myproject
+cd myproject
+git init
+echo "This is my first Git file" > readme.txt
+git add readme.txt
+git commit -m "Added readme.txt as initial project file"
+git remote add origin https://github.com/username/myproject.git
+git push -u origin main
+
+
+
+Q16.	Set up a basic CI pipeline using a CI/CD tool (e.g., Jenkins), Configure the pipeline to build a simple project (e.g., a "Hello World" application).
+1️⃣ Install Jenkins Plugins
+
+Open Jenkins Dashboard → Manage Jenkins → Plugins → Available plugins
+
+Search for and install:
+
+Pipeline
+
+Git plugin
+
+Restart Jenkins if required.
+
+2️⃣ Create a New Pipeline Project
+
+From Jenkins Dashboard → click New Item
+
+Enter a name → select Pipeline → click OK
+
+3️⃣ Configure Pipeline
+
+Scroll to Pipeline section.
+
+In Definition, select Pipeline script.
+
+In the Script box, paste the following pipeline code 👇
+
+🧩 Sample Jenkinsfile (Declarative Pipeline)
+
+For a simple “Hello World” build:
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building Hello World project...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                echo 'Hello World!'
+            }
+        }
+    }
+}
+
+
+✅ This is a basic CI pipeline that simulates build, test, and deploy steps.
+
+4️⃣ Save and Build
+
+Click Save
+
+Click Build Now
+
+You’ll see the stages execute under Build History → Console Output:
+
+Building Hello World project...
+Running tests...
+Deploying application...
+Hello World!
+
+5️⃣ (Optional) Use GitHub Repository
+
+If you have your project on GitHub:
+
+Under Pipeline → Definition → Pipeline script from SCM
+
+Select Git
+
+Add your repository URL (e.g., https://github.com/username/helloworld.git
+)
+
+Branch: */main
+
+Jenkins will pull code from GitHub automatically.
+
+✅ Result
+
+You’ve created a Continuous Integration (CI) pipeline that:
+
+Fetches code from GitHub
+
+Builds it automatically
+
+Runs test and deploy stages
+
+Displays results in Jenkins console
+
+
+17.	Build a Docker image from the Docker file, run a Docker container using the built image.
+⚙️ Step-by-Step Process
+1️⃣ Create a Project Folder
+mkdir docker-demo
+cd docker-demo
+
+2️⃣ Create a Simple Application
+
+Example: A basic “Hello World” Python app
+Create a file named app.py:
+
+print("Hello, World! from Docker Container")
+
+3️⃣ Create a Dockerfile
+
+Create a file named Dockerfile (no extension)
+
+# Use an official Python base image
+FROM python:3.9-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy application files into container
+COPY . /app
+
+# Command to run the app
+CMD ["python", "app.py"]
+
+
+✅ Explanation:
+
+FROM → base image to start with
+
+WORKDIR → sets default directory
+
+COPY → copies project files
+
+CMD → command to execute when container starts
+
+4️⃣ Build the Docker Image
+
+Run this command in the same directory as your Dockerfile:
+
+sudo docker build -t hello-docker .
+
+
+✅ -t is used to tag (name) the image.
+
+5️⃣ Verify Image Creation
+sudo docker images
+
+
+✅ You’ll see something like:
+
+REPOSITORY       TAG       IMAGE ID       CREATED         SIZE
+hello-docker     latest    a1b2c3d4e5f6   2 minutes ago   125MB
+
+6️⃣ Run the Docker Container
+sudo docker run hello-docker
+
+
+✅ Output:
+
+Hello, World! from Docker Container
+
+7️⃣ (Optional) Run in Interactive Mode
+sudo docker run -it hello-docker /bin/bash
+
+
+✅ Opens a terminal inside the running container.
+
+8️⃣ Stop & Remove Container (Optional)
+sudo docker ps -a           # list all containers
+sudo docker stop <container_id>
+sudo docker rm <container_id>
